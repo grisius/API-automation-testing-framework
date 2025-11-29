@@ -23,4 +23,3 @@ class Payloads:
         "status": "available"
     }
 
-print(Payloads().add_new_pet_to_store)
