@@ -1,5 +1,4 @@
 from faker import Faker
-from random import randint
 
 
 fake = Faker()
@@ -7,9 +6,9 @@ fake = Faker()
 class Payloads:
 
     add_new_pet_to_store = {
-        "id": randint(11, 100),
+        "id": fake.random_number(5),
         "category": {
-            "id": randint(101, 200),
+            "id": fake.random_number(4),
             "name": fake.street_suffix()
             },
         "name": fake.name(),
@@ -17,9 +16,8 @@ class Payloads:
             fake.url()
             ],
         "tags": [{
-            "id": randint(201, 300),
+            "id": fake.random_number(3),
             "name": fake.user_name()
             }],
         "status": "available"
     }
-

@@ -1,10 +1,10 @@
-import allure
-import requests as r
-from utils.helper import Helper
-from config.headers import Headers
+from services.pet.models.pet_model import PetModel
 from services.pet.endpoints import Endpoints
 from services.pet.payloads import Payloads
-from services.pet.models.pet_model import PetModel
+from config.headers import Headers
+from utils.helper import Helper
+import requests as r
+import allure
 
 
 class PetAPI(Helper):
@@ -26,4 +26,3 @@ class PetAPI(Helper):
         self.attach_response(response.json())
         model = PetModel(**response.json())
         return model
-
