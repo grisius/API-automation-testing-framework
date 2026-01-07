@@ -11,7 +11,7 @@ class Payloads:
             "id": fake.random_number(4),
             "name": fake.street_suffix()
             },
-        "name": fake.name(),
+        "name": fake.first_name(),
         "photoUrls": [
             fake.url()
             ],

@@ -1,5 +1,3 @@
-import  os
-
 
 HOST_URL = "https://petstore.swagger.io/v2"
 
