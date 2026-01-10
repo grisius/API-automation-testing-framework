@@ -22,7 +22,7 @@ class PetAPI(Helper):
             headers=self.headers.basic,
             json=self.payloads.add_new_pet_to_store
         )
-        assert response.status_code == 200, f"\n{response.json()}"
+        assert response.status_code == 200, f"Response json: \n{response.json()}"
         self.attach_response(response.json())
         model = PetModel(**response.json())
         return model
