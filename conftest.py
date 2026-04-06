@@ -12,4 +12,5 @@ def init_environment():
         url="https://petstore.swagger.io/oauth/authorize",
         headers={"Authorization": f"Bearer {os.getenv('API_TOKEN')}"}
     )
-    assert response.status_code == 200
+    assert response.status_code == 200, f"Auth fail: {response.text}"
+

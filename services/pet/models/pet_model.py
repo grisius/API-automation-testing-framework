@@ -1,24 +1,25 @@
 from pydantic import BaseModel, field_validator, HttpUrl
+from typing import Optional, List
 
 
 class Tags(BaseModel):
 
-    id: int
-    name: str
+    id: Optional[int] = None
+    name: Optional[str] = None
 
 
 class Category(BaseModel):
 
-    id: int
-    name: str
+    id: Optional[int] = None
+    name: Optional[str] = None
 
 
 class PetModel(BaseModel):
 
-    id: int
-    category: Category
+    id: Optional[int] = None
+    category: Optional[Category] = None
     name: str
-    photoUrls: list[HttpUrl]
-    tags: list[Tags]
-    status: str
+    photoUrls:  list[str]
+    tags: Optional[list[Tags]] = None
+    status: Optional[str] = None
 
