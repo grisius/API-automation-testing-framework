@@ -1,7 +1,9 @@
 from config.base_test import BaseTest
+import pytest
 
 
-class TestUser(BaseTest):
+@pytest.mark.positive
+class TestUserPositive(BaseTest):
 
     def test_create_new_user(self):
         user = self.api_user.create_user()
@@ -23,3 +25,8 @@ class TestUser(BaseTest):
         user = self.api_user.user_log_out()
         self.api_user.check_user_log_out(user)
 
+
+@pytest.mark.negative
+class TestUserNegative(BaseTest):
+
+    pass

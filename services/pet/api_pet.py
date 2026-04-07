@@ -26,3 +26,11 @@ class PetAPI(Helper):
         self.attach_response(response.json())
         model = PetModel(**response.json())
         return model
+
+    @staticmethod
+    def check_pet_add_to_store(response):
+        assert response.name == "Buddy"
+        assert response.photoUrls == [
+                "www.buddy.flow",
+                "www.doggy.com"
+        ]

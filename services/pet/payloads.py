@@ -11,9 +11,10 @@ class Payloads:
             "id": fake.random_number(4),
             "name": fake.street_suffix()
             },
-        "name": fake.first_name(),
+        "name": "Buddy",
         "photoUrls": [
-            fake.url()
+            "www.buddy.flow",
+            "www.doggy.com"
             ],
         "tags": [{
             "id": fake.random_number(3),
