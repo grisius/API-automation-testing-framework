@@ -14,8 +14,8 @@ class TestUserPositive(BaseTest):
         self.api_user.check_user_received_by_username(user)
 
     def test_log_in_user(self):
-        user_login = self.api_user.login_user()
-        self.api_user.check_user_log_in(user_login)
+        user = self.api_user.login_user()
+        self.api_user.check_user_log_in(user)
 
     def test_update_user(self):
         user = self.api_user.update_user()
@@ -24,6 +24,10 @@ class TestUserPositive(BaseTest):
     def test_log_out_user(self):
         user = self.api_user.user_log_out()
         self.api_user.check_user_log_out(user)
+
+    def test_delete_user(self):
+        user = self.api_user.delete_user()
+        self.api_user.check_delete_user(user)
 
 
 @pytest.mark.negative

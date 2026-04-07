@@ -109,3 +109,25 @@ class UserAPI(Helper):
     def check_user_log_out(response):
         assert response.message == "ok", \
             f"Fail user log out: {response.json()}"
+
+    def delete_user(self):
+        api_response = self.create_user()
+        self.check_user_created(api_response)
+        user = self.get_user_by_username(self.username)
+        response = r.delete(
+            url=self.endpoints.delete_user(user.username)
+        )
+        assert response.status_code == 200, \
+            f"Fail delete user: {response.json()}"
+        self.attach_response(response.json())
+        model = ApiResponseModel(**response.json())
+        return model
+
+    def check_delete_user(self, model):
+        assert model.message == self.username, \
+            f"Incorrect delete user message: {model}"
+        response = r.get(
+            url=self.endpoints.get_user_by_username_get(self.username)
+        )
+        assert response.status_code == 404, response.json()
+        assert response.json()["message"] == "User not found"
