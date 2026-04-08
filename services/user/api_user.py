@@ -14,6 +14,7 @@ class UserAPI(Helper):
         self.endpoints = Endpoints()
         self.payloads = Payloads()
         self.username = "crocodilo"
+        self.nonexistent_user = "q"
 
     def create_user(self):
         response = r.post(
@@ -32,11 +33,11 @@ class UserAPI(Helper):
         assert response.message == "111555999", \
             f"User id is not correct: {response.message}"
 
-    def get_user_by_username(self, username):
+    def get_user_by_username(self):
         user = self.create_user()
         self.check_user_created(user)
         response = r.get(
-            url=self.endpoints.get_user_by_username_get(username)
+            url=self.endpoints.get_user_by_username_get(self.username)
         )
         assert response.status_code == 200, \
             f"Fail getting user by username: {response.json()}"
@@ -131,3 +132,57 @@ class UserAPI(Helper):
         )
         assert response.status_code == 404, response.json()
         assert response.json()["message"] == "User not found"
+
+
+    # Nagative
+
+    def create_incorrect_user(self):
+        response = r.post(
+            url=self.endpoints.create_user_post,
+            headers=self.headers.basic,
+            json=self.payloads.incorrect_data
+        )
+        assert response.status_code == 500, \
+            f"Fail creating user: {response.json()}"
+        self.attach_response(response.json())
+        model = ApiResponseModel(**response.json())
+        return model
+
+    @staticmethod
+    def check_user_not_created(response):
+        assert response.message == "something bad happened", \
+            f"User created: {response.message}"
+
+    def get_nonexistent_user_by_username(self):
+        response = r.get(
+            url=self.endpoints.get_user_by_username_get("asdfgh99321xxw")
+        )
+        assert response.status_code == 404, \
+            f"User exist: {response.json()}"
+        self.attach_response(response.json())
+        model = ApiResponseModel(**response.json())
+        return model
+
+    @staticmethod
+    def check_user_not_found_by_username(response):
+        assert response.message == "User not found", \
+            f"wrong message: {response.message}"
+
+    def login_user_with_incorrect_data(self):
+        params = {"username": "asfgh9321xw", "password": "wqqw2c3"}
+        response = r.get(
+            url=self.endpoints.log_in_user_get,
+            params=params
+        )
+        assert response.status_code == 400, \
+            f"Fail login user: {response.json()}"
+        assert response.headers["x-rate-limit"] == "5000"
+        self.attach_response(response.json())
+        model = ApiResponseModel(**response.json())
+        return model
+
+    @staticmethod
+    def check_user_not_log_in(response):
+        assert response.message == "Invalid username/password supplied", \
+            "Wrong message"
+

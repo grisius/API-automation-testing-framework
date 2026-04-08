@@ -26,3 +26,14 @@ class Payloads:
         "phone": "upd-phone",
         "userStatus": 111
     }
+
+    incorrect_data = {
+        "id": fake.random_number(7),
+        "username": "crocodilo",
+        "firstName": fake.first_name(),
+        "lastName": fake.last_name(),
+        "email": fake.email(),
+        "password": fake.password(),
+        "phone": fake.phone_number(),
+        "userStatus": fake.random_number(10)
+    }
