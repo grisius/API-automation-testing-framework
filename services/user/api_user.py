@@ -54,7 +54,7 @@ class UserAPI(Helper):
     def login_user(self):
         api_response = self.create_user()
         self.check_user_created(api_response)
-        user = self.get_user_by_username(self.username)
+        user = self.get_user_by_username()
         params = {"username": user.username, "password": user.password}
         response = r.get(
             url=self.endpoints.log_in_user_get,
@@ -114,7 +114,7 @@ class UserAPI(Helper):
     def delete_user(self):
         api_response = self.create_user()
         self.check_user_created(api_response)
-        user = self.get_user_by_username(self.username)
+        user = self.get_user_by_username()
         response = r.delete(
             url=self.endpoints.delete_user(user.username)
         )
