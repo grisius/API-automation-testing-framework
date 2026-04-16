@@ -14,7 +14,7 @@ class UserAPI(Helper):
         self.endpoints = Endpoints()
         self.payloads = Payloads()
         self.username = "crocodilo"
-        self.nonexistent_user = "q"
+        self.nonexistent_user = "qwwrrr2rrrw222a"
 
     def create_user(self):
         response = r.post(
