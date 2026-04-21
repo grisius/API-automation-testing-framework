@@ -6,7 +6,7 @@ fake = Faker()
 class Payloads:
 
     add_new_pet_to_store = {
-        "id": fake.random_number(5),
+        "id": 1112223330212,
         "category": {
             "id": fake.random_number(4),
             "name": fake.street_suffix()

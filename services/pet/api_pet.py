@@ -14,6 +14,11 @@ class PetAPI(Helper):
         self.headers = Headers()
         self.endpoints = Endpoints()
         self.payloads = Payloads()
+        self.name = "Buddy"
+        self.photo_urls = [
+            "www.buddy.flow",
+            "www.doggy.com"
+            ]
 
     @allure.step("Add new pet to store")
     def add_new_pet_to_store(self):
@@ -34,3 +39,18 @@ class PetAPI(Helper):
                 "www.buddy.flow",
                 "www.doggy.com"
         ]
+
+    def get_pet_by_id(self):
+        pet = self.add_new_pet_to_store()
+        self.check_pet_add_to_store(pet)
+        response = r.get(
+            url=self.endpoints.find_pet_by_id_get(1112223330212),
+        )
+        assert response.status_code == 200, f"Response json: \n{response.json()}"
+        self.attach_response(response.json())
+        model = PetModel(**response.json())
+        return model
+
+    def check_pet_get_by_id(self, model):
+        assert model.name == self.name
+        assert model.photoUrls == self.photo_urls
