@@ -22,3 +22,21 @@ class Payloads:
             }],
         "status": "available"
     }
+
+    update_pet_data = {
+        "id": 1112223330212,
+        "category": {
+            "id": 552233617,
+            "name": "cat_updated"
+            },
+        "name": "Buddy_updated",
+        "photoUrls": [
+            "www.buddy_updated.flow",
+            "www.doggy_updated.com"
+            ],
+        "tags": [{
+            "id": 42151,
+            "name": "username_updated"
+            }],
+        "status": "available"
+    }

@@ -13,3 +13,6 @@ class TestPet(BaseTest):
         pet = self.api_pet.get_pet_by_id()
         self.api_pet.check_pet_get_by_id(pet)
 
+    def test_update_existing_pet(self):
+        pet = self.api_pet.update_existing_pet()
+        self.api_pet.check_update_existing_pet(pet)

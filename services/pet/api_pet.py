@@ -54,3 +54,19 @@ class PetAPI(Helper):
     def check_pet_get_by_id(self, model):
         assert model.name == self.name
         assert model.photoUrls == self.photo_urls
+
+    def update_existing_pet(self):
+        pet = self.add_new_pet_to_store()
+        self.check_pet_add_to_store(pet)
+        response = r.put(
+            url=self.endpoints.update_an_existing_pet_put,
+            json=self.payloads.update_pet_data
+        )
+        assert response.status_code == 200, response.json()
+        self.attach_response(response.json())
+        model = PetModel(**response.json())
+        return model
+
+    def check_update_existing_pet(self, pet):
+        assert pet == PetModel(**self.payloads.update_pet_data), \
+            f"model is not correct: {pet}"
