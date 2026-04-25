@@ -16,3 +16,7 @@ class TestPet(BaseTest):
     def test_update_existing_pet(self):
         pet = self.api_pet.update_existing_pet()
         self.api_pet.check_update_existing_pet(pet)
+
+    def test_delete_pet(self):
+        pet = self.api_pet.delete_pet()
+        self.api_pet.check_delete_pet(pet)

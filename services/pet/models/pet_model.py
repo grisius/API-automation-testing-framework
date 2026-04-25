@@ -23,3 +23,10 @@ class PetModel(BaseModel):
     tags: Optional[list[Tags]] = None
     status: Optional[str] = None
 
+
+class ApiResponseModel(BaseModel):
+
+    code: int
+    type: str
+    message: str
+

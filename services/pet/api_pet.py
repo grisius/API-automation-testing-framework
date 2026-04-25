@@ -1,4 +1,4 @@
-from services.pet.models.pet_model import PetModel
+from services.pet.models.pet_model import PetModel, ApiResponseModel
 from services.pet.endpoints import Endpoints
 from services.pet.payloads import Payloads
 from config.headers import Headers
@@ -33,9 +33,9 @@ class PetAPI(Helper):
         return model
 
     @staticmethod
-    def check_pet_add_to_store(response):
-        assert response.name == "Buddy"
-        assert response.photoUrls == [
+    def check_pet_add_to_store(pet):
+        assert pet.name == "Buddy"
+        assert pet.photoUrls == [
                 "www.buddy.flow",
                 "www.doggy.com"
         ]
@@ -51,9 +51,9 @@ class PetAPI(Helper):
         model = PetModel(**response.json())
         return model
 
-    def check_pet_get_by_id(self, model):
-        assert model.name == self.name
-        assert model.photoUrls == self.photo_urls
+    def check_pet_get_by_id(self, pet):
+        assert pet.name == self.name
+        assert pet.photoUrls == self.photo_urls
 
     def update_existing_pet(self):
         pet = self.add_new_pet_to_store()
@@ -70,3 +70,22 @@ class PetAPI(Helper):
     def check_update_existing_pet(self, pet):
         assert pet == PetModel(**self.payloads.update_pet_data), \
             f"model is not correct: {pet}"
+
+    def delete_pet(self):
+        pet = self.add_new_pet_to_store()
+        self.check_pet_add_to_store(pet)
+        response = r.delete(
+            url=self.endpoints.delete_pet(pet.id)
+        )
+        assert response.status_code == 200, response.json()
+        self.attach_response(response.json())
+        model = ApiResponseModel(**response.json())
+        return model
+
+    def check_delete_pet(self, pet):
+        pet_id = int(pet.message)
+        response = r.get(
+            url=self.endpoints.find_pet_by_id_get(pet_id))
+        assert response.status_code == 404, response.json()
+        assert response.json()["message"] == "Pet not found", \
+            response.json()
