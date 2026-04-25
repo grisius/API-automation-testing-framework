@@ -27,26 +27,24 @@ class PetAPI(Helper):
             headers=self.headers.basic,
             json=self.payloads.add_new_pet_to_store
         )
-        assert response.status_code == 200, f"Response json: \n{response.json()}"
+        assert response.status_code == 200, \
+            f"Response json: \n{response.json()}"
         self.attach_response(response.json())
         model = PetModel(**response.json())
         return model
 
-    @staticmethod
-    def check_pet_add_to_store(pet):
-        assert pet.name == "Buddy"
-        assert pet.photoUrls == [
-                "www.buddy.flow",
-                "www.doggy.com"
-        ]
+    def check_pet_add_to_store(self, pet):
+        assert pet.name == self.name
+        assert pet.photoUrls == self.photo_urls
 
     def get_pet_by_id(self):
         pet = self.add_new_pet_to_store()
         self.check_pet_add_to_store(pet)
         response = r.get(
-            url=self.endpoints.find_pet_by_id_get(1112223330212),
+            url=self.endpoints.find_pet_by_id_get(pet.id),
         )
-        assert response.status_code == 200, f"Response json: \n{response.json()}"
+        assert response.status_code == 200, \
+            f"Response json: \n{response.json()}"
         self.attach_response(response.json())
         model = PetModel(**response.json())
         return model
