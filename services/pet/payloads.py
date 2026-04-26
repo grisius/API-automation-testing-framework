@@ -40,3 +40,16 @@ class Payloads:
             }],
         "status": "available"
     }
+
+    incorrect_pet_data = {
+        "id": 1112223330212222563236236233,
+        "category": {
+            "id": fake.random_number(4),
+            "name": fake.street_suffix()
+        },
+        "tags": [{
+            "id": fake.random_number(3),
+            "name": fake.user_name()
+        }],
+        "status": "available"
+    }

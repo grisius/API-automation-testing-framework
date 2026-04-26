@@ -87,3 +87,19 @@ class PetAPI(Helper):
         assert response.status_code == 404, response.json()
         assert response.json()["message"] == "Pet not found", \
             response.json()
+
+    # Negative
+
+    def add_new_pet_with_incorrect_data(self):
+        response = r.post(
+            url=self.endpoints.add_new_pet_post,
+            json=self.payloads.incorrect_pet_data
+        )
+        assert response.status_code == 500, response.json()
+        self.attach_response(response.json())
+        model = response.json()
+        return model
+
+    @staticmethod
+    def check_add_new_pet_with_incorrect_data(pet):
+        assert pet["message"] == "something bad happened", pet
