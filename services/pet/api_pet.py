@@ -14,6 +14,7 @@ class PetAPI(Helper):
         self.headers = Headers()
         self.endpoints = Endpoints()
         self.payloads = Payloads()
+        self.incorrect_id = 9991112241001209
         self.name = "Buddy"
         self.photo_urls = [
             "www.buddy.flow",
@@ -97,9 +98,33 @@ class PetAPI(Helper):
         )
         assert response.status_code == 500, response.json()
         self.attach_response(response.json())
-        model = response.json()
+        model = ApiResponseModel(**response.json())
         return model
 
     @staticmethod
     def check_add_new_pet_with_incorrect_data(pet):
-        assert pet["message"] == "something bad happened", pet
+        assert pet.message == "something bad happened", pet
+
+    def get_pet_by_nonexistent_id(self):
+        response = r.get(
+            url=self.endpoints.find_pet_by_id_get(self.incorrect_id))
+        assert response.status_code == 404, response.json()
+        self.attach_response(response.json())
+        model = ApiResponseModel(**response.json())
+        return model
+
+    @staticmethod
+    def check_get_pet_with_nonexistent_id(pet):
+        assert pet.message == "Pet not found", pet
+
+    def delete_nonexistent_pet(self):
+        response = r.delete(
+            url=self.endpoints.delete_pet(self.incorrect_id),
+            headers=self.headers.basic
+        )
+        assert response.status_code is not 200, response
+        return response
+
+    @staticmethod
+    def check_delete_nonexistent_pet(pet):
+        assert pet.status_code == 404, pet

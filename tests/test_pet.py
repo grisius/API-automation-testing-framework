@@ -28,3 +28,11 @@ class TestPetNegative(BaseTest):
     def test_add_new_pet_with_incorrect_data(self):
         pet = self.api_pet.add_new_pet_with_incorrect_data()
         self.api_pet.check_add_new_pet_with_incorrect_data(pet)
+
+    def test_get_pet_by_nonexistent_id(self):
+        pet = self.api_pet.get_pet_by_nonexistent_id()
+        self.api_pet.check_get_pet_with_nonexistent_id(pet)
+
+    def test_delete_nonexistent_pet(self):
+        pet = self.api_pet.delete_nonexistent_pet()
+        self.api_pet.check_delete_nonexistent_pet(pet)

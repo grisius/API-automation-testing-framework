@@ -5,6 +5,7 @@ from allure_commons.types import AttachmentType as Atype
 
 class Helper:
 
-    def attach_response(self, response) -> None:
+    @staticmethod
+    def attach_response(response) -> None:
         response = json.dumps(response, indent=4)
         allure.attach(body=response, name="API Response", attachment_type=Atype.JSON)
