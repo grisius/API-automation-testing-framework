@@ -1,5 +1,6 @@
-from pydantic import BaseModel, field_validator, HttpUrl
-from typing import Optional, List
+from pydantic import BaseModel
+from typing import Optional
+from enum import Enum
 
 
 class Tags(BaseModel):
@@ -14,6 +15,13 @@ class Category(BaseModel):
     name: Optional[str] = None
 
 
+class PetStatus(str, Enum):
+
+    available = "available"
+    pending = "pending"
+    sold = "sold"
+
+
 class PetModel(BaseModel):
 
     id: Optional[int] = None
@@ -21,7 +29,7 @@ class PetModel(BaseModel):
     name: str
     photoUrls:  list[str]
     tags: Optional[list[Tags]] = None
-    status: Optional[str] = None
+    status: Optional[PetStatus] = None
 
 
 class ApiResponseModel(BaseModel):
