@@ -1,17 +1,16 @@
 from pydantic import BaseModel, field_validator
-from typing import Optional
 
 
 class UserModel(BaseModel):
 
-    id: Optional[int] = None
-    username: Optional[str] = None
-    firstName: Optional[str] = None
-    lastName: Optional[str] = None
-    email: Optional[str] = None
-    password: Optional[str] = None
-    phone: Optional[str] = None
-    userStatus: Optional[int] = None
+    id: int | None = None
+    username: str
+    firstName: str | None = None
+    lastName: str | None = None
+    email: str | None = None
+    password: str
+    phone: str | None = None
+    userStatus: int | None = None
 
 
 class ApiResponseModel(BaseModel):
