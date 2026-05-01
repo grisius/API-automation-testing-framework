@@ -27,3 +27,19 @@ class StoreAPI(Helper):
     def check_get_pet_inventory(self, model):
         for s in self.status:
             assert s in model.keys(), model
+
+    def place_order_for_a_pet(self):
+        response = r.post(
+            url=self.endpoints.place_order_for_pet_post,
+            json=self.payloads.correct_order_data
+        )
+        assert response.status_code == 200, response.json()
+        self.attach_response(response.json())
+        model = StoreModel(**response.json())
+        return model
+
+    def check_place_order_for_a_pet(self, model):
+        assert model == StoreModel(
+            **self.payloads.correct_order_data), model
+
+
