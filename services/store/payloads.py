@@ -13,3 +13,12 @@ class Payloads:
     "status": "placed",
     "complete": True
     }
+
+    invalid_order_data = {
+        "id": 7,
+        "petId": 7777888999933001,
+        "quantity": 1,
+        "shipDate": "2026-04-30Е14:46:42.338Z",
+        "status": "placed",
+        "complete": True
+    }

@@ -70,6 +70,18 @@ class StoreAPI(Helper):
         order_id = str(self.payloads.correct_order_data["id"])
         assert model.message == order_id
 
+    # Negative
 
+    def place_invalid_order_for_a_pet(self):
+        response = r.post(
+            url=self.endpoints.place_order_for_pet_post,
+            json=self.payloads.invalid_order_data
+        )
+        assert response.status_code == 500, response.json()
+        self.attach_response(response.json())
+        model = ApiResponseModel(**response.json())
+        return model
 
-
+    @staticmethod
+    def check_place_invalid_order_for_a_pet(model):
+        assert model.message == "something bad happened"
