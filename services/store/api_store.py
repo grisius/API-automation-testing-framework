@@ -15,6 +15,7 @@ class StoreAPI(Helper):
         self.endpoints = Endpoints()
         self.payloads = Payloads()
         self.status = ["available", "pending", "sold"]
+        self.invalid_id = 222241111005
 
     def get_pet_inventories(self):
         response = r.get(
@@ -85,3 +86,16 @@ class StoreAPI(Helper):
     @staticmethod
     def check_place_invalid_order_for_a_pet(model):
         assert model.message == "something bad happened"
+
+    def get_purchase_order_by_invalid_id(self):
+        response = r.get(
+            url=self.endpoints.get_order_by_id_get(self.invalid_id)
+        )
+        assert response.status_code == 404, response.json()
+        self.attach_response(response.json())
+        model = ApiResponseModel(**response.json())
+        return model
+
+    @staticmethod
+    def check_get_purchase_order_by_invalid_id(model):
+        assert model.message == "Order not found"
