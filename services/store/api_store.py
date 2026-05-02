@@ -1,4 +1,4 @@
-from services.store.models.store_model import StoreModel
+from services.store.models.store_model import StoreModel, ApiResponseModel
 from services.store.endpoints import Endpoints
 from services.store.payloads import Payloads
 from config.headers import Headers
@@ -55,3 +55,21 @@ class StoreAPI(Helper):
     def check_get_purchase_order_by_id(self, model):
         assert model == StoreModel(
             **self.payloads.correct_order_data), model
+
+    def delete_purchase_order_by_id(self):
+        order = self.place_order_for_a_pet()
+        response = r.delete(
+            url=self.endpoints.delete_order_by_id_delete(order.id)
+        )
+        assert response.status_code == 200, response.json()
+        self.attach_response(response.json())
+        model = ApiResponseModel(**response.json())
+        return model
+
+    def check_delete_purchase_order_by_id(self, model):
+        order_id = str(self.payloads.correct_order_data["id"])
+        assert model.message == order_id
+
+
+
+

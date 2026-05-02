@@ -19,3 +19,9 @@ class StoreModel(BaseModel):
     status: OrderStatus | None = None
     complete: bool | None = None
 
+
+class ApiResponseModel(BaseModel):
+
+    code: int
+    type: str
+    message: str

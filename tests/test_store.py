@@ -14,3 +14,7 @@ class TestStore(BaseTest):
     def test_get_purchase_order_by_id(self):
         order = self.api_store.get_purchase_order_by_id()
         self.api_store.check_get_purchase_order_by_id(order)
+
+    def test_delete_purchase_order_by_id(self):
+        order = self.api_store.delete_purchase_order_by_id()
+        self.api_store.check_delete_purchase_order_by_id(order)
