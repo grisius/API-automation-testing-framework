@@ -42,4 +42,16 @@ class StoreAPI(Helper):
         assert model == StoreModel(
             **self.payloads.correct_order_data), model
 
+    def get_purchase_order_by_id(self):
+        order = self.place_order_for_a_pet()
+        response = r.get(
+            url=self.endpoints.get_order_by_id_get(order.id)
+        )
+        assert response.status_code == 200, response.json()
+        self.attach_response(response.json())
+        model = StoreModel(**response.json())
+        return model
 
+    def check_get_purchase_order_by_id(self, model):
+        assert model == StoreModel(
+            **self.payloads.correct_order_data), model

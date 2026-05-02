@@ -10,3 +10,7 @@ class TestStore(BaseTest):
     def test_place_order_for_a_pet(self):
         order = self.api_store.place_order_for_a_pet()
         self.api_store.check_place_order_for_a_pet(order)
+
+    def test_get_purchase_order_by_id(self):
+        order = self.api_store.get_purchase_order_by_id()
+        self.api_store.check_get_purchase_order_by_id(order)
