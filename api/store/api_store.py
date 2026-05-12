@@ -17,7 +17,7 @@ class StoreAPI(Helper):
         self.status = ["available", "pending", "sold"]
         self.invalid_id = 222241111005
 
-    def get_pet_inventories(self):
+    def get_pet_inventory(self):
         response = r.get(
             url=self.endpoints.get_pet_inventory_get
         )

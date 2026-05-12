@@ -185,4 +185,3 @@ class UserAPI(Helper):
     def check_user_not_log_in(response):
         assert response.message == "Invalid username/password supplied", \
             "Wrong message"
-

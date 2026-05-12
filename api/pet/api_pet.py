@@ -122,7 +122,7 @@ class PetAPI(Helper):
             url=self.endpoints.delete_pet(self.incorrect_id),
             headers=self.headers.basic
         )
-        assert response.status_code is not 200, response
+        assert response.status_code != 200, response
         return response
 
     @staticmethod
