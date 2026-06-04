@@ -2,6 +2,7 @@ from config.base_test import BaseTest
 import pytest
 import allure
 
+
 @allure.epic("User Module")
 @allure.feature("Positive Cases")
 @pytest.mark.positive
@@ -15,32 +16,33 @@ class TestUserPositive(BaseTest):
 
     @allure.story("User profile management")
     @allure.title("Get user by username")
-    def test_get_user_by_username(self):
-        user = self.api_user.get_user_by_username()
-        self.api_user.check_user_received_by_username(user)
+    def test_get_user_by_username(self, created_user):
+        user = self.api_user.get_user_by_username(created_user.username)
+        self.api_user.check_user_received_by_username(created_user, user)
 
     @allure.story("User authentication")
     @allure.title("Logs user in")
-    def test_log_in_user(self):
-        user = self.api_user.login_user()
+    def test_log_in_user(self, created_user):
+        user = self.api_user.login_user(created_user)
         self.api_user.check_user_log_in(user)
 
     @allure.story("User profile management")
     @allure.title("Update user")
-    def test_update_user(self):
-        user = self.api_user.update_user()
+    def test_update_user(self, created_user):
+        user = self.api_user.update_user(created_user.username)
         self.api_user.check_user_update(user)
 
     @allure.story("User authentication")
     @allure.title("Logs user out")
-    def test_log_out_user(self):
+    def test_log_out_user(self, created_user):
+        self.api_user.login_user(created_user)
         user = self.api_user.user_log_out()
         self.api_user.check_user_log_out(user)
 
     @allure.story("User profile management")
     @allure.title("Delete user")
-    def test_delete_user(self):
-        user = self.api_user.delete_user()
+    def test_delete_user(self, created_user):
+        user = self.api_user.delete_user(created_user.username)
         self.api_user.check_delete_user(user)
 
 
