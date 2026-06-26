@@ -16,20 +16,20 @@ class TestPet(BaseTest):
 
     @allure.story("Pet data retrieval")
     @allure.title("Get pet by ID")
-    def test_get_pet_by_id(self):
-        pet = self.api_pet.get_pet_by_id()
+    def test_get_pet_by_id(self, created_pet):
+        pet = self.api_pet.get_pet_by_id(created_pet.id)
         self.api_pet.check_pet_get_by_id(pet)
 
     @allure.story("Data update")
     @allure.title("Update an existing pet")
-    def test_update_existing_pet(self):
+    def test_update_existing_pet(self, created_pet):
         pet = self.api_pet.update_existing_pet()
         self.api_pet.check_update_existing_pet(pet)
 
     @allure.story("Pet deletion")
     @allure.title("Deletes a pet")
-    def test_delete_pet(self):
-        pet = self.api_pet.delete_pet()
+    def test_delete_pet(self, created_pet):
+        pet = self.api_pet.delete_pet(created_pet.id)
         self.api_pet.check_delete_pet(pet)
 
 

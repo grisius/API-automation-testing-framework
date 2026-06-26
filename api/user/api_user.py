@@ -16,7 +16,6 @@ class UserAPI(Helper):
         self.payloads = Payloads()
         self.user_data = UserModel(**self.payloads.user_random_data)
 
-
     @allure.step("Create user")
     def create_user(self):
         response = r.post(

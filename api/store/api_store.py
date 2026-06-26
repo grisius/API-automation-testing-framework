@@ -1,10 +1,9 @@
-from services.store.models.store_model import StoreModel, ApiResponseModel
-from services.store.endpoints import Endpoints
-from services.store.payloads import Payloads
+from api.store.models.store_model import StoreModel, ApiResponseModel
+from api.store.endpoints import Endpoints
+from api.store.payloads import Payloads
 from config.headers import Headers
 from utils.helper import Helper
 import requests as r
-import pytest
 
 
 class StoreAPI(Helper):
@@ -43,10 +42,9 @@ class StoreAPI(Helper):
         assert model == StoreModel(
             **self.payloads.correct_order_data), model
 
-    def get_purchase_order_by_id(self):
-        order = self.place_order_for_a_pet()
+    def get_purchase_order_by_id(self, order_id):
         response = r.get(
-            url=self.endpoints.get_order_by_id_get(order.id)
+            url=self.endpoints.get_order_by_id_get(order_id)
         )
         assert response.status_code == 200, response.json()
         self.attach_response(response.json())
@@ -57,10 +55,9 @@ class StoreAPI(Helper):
         assert model == StoreModel(
             **self.payloads.correct_order_data), model
 
-    def delete_purchase_order_by_id(self):
-        order = self.place_order_for_a_pet()
+    def delete_purchase_order_by_id(self, order_id):
         response = r.delete(
-            url=self.endpoints.delete_order_by_id_delete(order.id)
+            url=self.endpoints.delete_order_by_id_delete(order_id)
         )
         assert response.status_code == 200, response.json()
         self.attach_response(response.json())

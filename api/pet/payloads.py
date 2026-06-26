@@ -5,16 +5,16 @@ fake = Faker()
 
 class Payloads:
 
-    add_new_pet_to_store = {
-        "id": 1112223330212,
+    add_new_pet = {
+        "id": fake.random_number(13),
         "category": {
             "id": fake.random_number(4),
             "name": fake.street_suffix()
             },
-        "name": "Buddy",
+        "name": fake.name(),
         "photoUrls": [
-            "www.buddy.flow",
-            "www.doggy.com"
+            fake.url(),
+            fake.url()
             ],
         "tags": [{
             "id": fake.random_number(3),
@@ -24,7 +24,7 @@ class Payloads:
     }
 
     update_pet_data = {
-        "id": 1112223330212,
+        "id": add_new_pet["id"],
         "category": {
             "id": 552233617,
             "name": "cat_updated"

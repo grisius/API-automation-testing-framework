@@ -1,6 +1,6 @@
-from services.pet.models.pet_model import PetModel, ApiResponseModel
-from services.pet.endpoints import Endpoints
-from services.pet.payloads import Payloads
+from api.pet.models.pet_model import PetModel, ApiResponseModel
+from api.pet.endpoints import Endpoints
+from api.pet.payloads import Payloads
 from config.headers import Headers
 from utils.helper import Helper
 import requests as r
@@ -15,18 +15,13 @@ class PetAPI(Helper):
         self.endpoints = Endpoints()
         self.payloads = Payloads()
         self.incorrect_id = 9991112241001209
-        self.name = "Buddy"
-        self.photo_urls = [
-            "www.buddy.flow",
-            "www.doggy.com"
-            ]
 
     @allure.step("Add new pet to store")
     def add_new_pet_to_store(self):
         response = r.post(
             url=self.endpoints.add_new_pet_post,
             headers=self.headers.basic,
-            json=self.payloads.add_new_pet_to_store
+            json=self.payloads.add_new_pet
         )
         assert response.status_code == 200, \
             f"Response json: \n{response.json()}"
@@ -35,14 +30,12 @@ class PetAPI(Helper):
         return model
 
     def check_pet_add_to_store(self, pet):
-        assert pet.name == self.name
-        assert pet.photoUrls == self.photo_urls
+        assert pet == PetModel(**self.payloads.add_new_pet), \
+            f"Model: {pet}"
 
-    def get_pet_by_id(self):
-        pet = self.add_new_pet_to_store()
-        self.check_pet_add_to_store(pet)
+    def get_pet_by_id(self, pet_id):
         response = r.get(
-            url=self.endpoints.find_pet_by_id_get(pet.id),
+            url=self.endpoints.find_pet_by_id_get(pet_id)
         )
         assert response.status_code == 200, \
             f"Response json: \n{response.json()}"
@@ -51,12 +44,9 @@ class PetAPI(Helper):
         return model
 
     def check_pet_get_by_id(self, pet):
-        assert pet.name == self.name
-        assert pet.photoUrls == self.photo_urls
+        assert pet == PetModel(**self.payloads.add_new_pet)
 
     def update_existing_pet(self):
-        pet = self.add_new_pet_to_store()
-        self.check_pet_add_to_store(pet)
         response = r.put(
             url=self.endpoints.update_an_existing_pet_put,
             json=self.payloads.update_pet_data
@@ -70,11 +60,9 @@ class PetAPI(Helper):
         assert pet == PetModel(**self.payloads.update_pet_data), \
             f"model is not correct: {pet}"
 
-    def delete_pet(self):
-        pet = self.add_new_pet_to_store()
-        self.check_pet_add_to_store(pet)
+    def delete_pet(self, pet_id):
         response = r.delete(
-            url=self.endpoints.delete_pet(pet.id)
+            url=self.endpoints.delete_pet(pet_id)
         )
         assert response.status_code == 200, response.json()
         self.attach_response(response.json())
@@ -87,7 +75,7 @@ class PetAPI(Helper):
             url=self.endpoints.find_pet_by_id_get(pet_id))
         assert response.status_code == 404, response.json()
         assert response.json()["message"] == "Pet not found", \
-            response.json()
+            response.text
 
     # Negative
 

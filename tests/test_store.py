@@ -22,14 +22,14 @@ class TestStore(BaseTest):
 
     @allure.story("Order search")
     @allure.title("Get purchase order by ID")
-    def test_get_purchase_order_by_id(self):
-        order = self.api_store.get_purchase_order_by_id()
+    def test_get_purchase_order_by_id(self, created_order):
+        order = self.api_store.get_purchase_order_by_id(created_order.id)
         self.api_store.check_get_purchase_order_by_id(order)
 
     @allure.story("Order deletion")
     @allure.title("Delete purchase order by ID")
-    def test_delete_purchase_order_by_id(self):
-        order = self.api_store.delete_purchase_order_by_id()
+    def test_delete_purchase_order_by_id(self, created_order):
+        order = self.api_store.delete_purchase_order_by_id(created_order.id)
         self.api_store.check_delete_purchase_order_by_id(order)
 
 
