@@ -1,6 +1,6 @@
+from allure_commons.types import AttachmentType as Atype
 import json
 import allure
-from allure_commons.types import AttachmentType as Atype
 
 
 class Helper:
