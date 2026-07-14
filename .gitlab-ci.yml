@@ -1,0 +1,21 @@
+stages:
+    - tests
+    - report
+
+services:
+    - docker:29.5.2-dind
+
+run-tests:
+    stage: tests
+    image: docker:29.5.2
+    script: 
+        - docker compose up api-tests || true
+    after_script:
+        - docker compose up report
+    artifacts:
+        paths:
+            - allure-report
+        when: on_success
+        access: all
+        expire_in: 360 days
+        
