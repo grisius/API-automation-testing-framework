@@ -16,6 +16,17 @@ run-tests:
         paths:
             - allure-report
         when: on_success
-        access: all
-        expire_in: 360 days
+        expire_in: 90 days
         
+pages:
+    stage: report
+    needs:
+        - run_tests
+    script:
+        - mkdir public
+        - cp -r allure-report/* public
+    artifacts:
+        when: on_success
+        expire_in: never
+        paths:
+            - public
