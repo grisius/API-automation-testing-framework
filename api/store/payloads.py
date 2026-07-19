@@ -1,4 +1,4 @@
-import datetime
+from datetime import timezone
 from faker import Faker
 
 
@@ -10,7 +10,7 @@ class Payloads:
         "id": fake.random_int(1, 10),
         "petId": fake.random_number(16),
         "quantity": 1,
-        "shipDate": fake.iso8601(tzinfo=datetime.timezone.utc),
+        "shipDate": fake.iso8601(tzinfo=timezone.utc, timespec="minutes"),
         "status": "placed",
         "complete": True
     }
